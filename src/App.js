@@ -1,69 +1,62 @@
-import React, { Component } from 'react';
-import axios from 'axios'
-import secret from './config'
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Main, Login } from './components'
 import './App.css';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      data : []
+      data : [],
+      isLogin: false,
+      userData: null
     }
   }
 
-  getAPIData() {
-    let self = this
-    axios.get('https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city', {
-      headers: {'user-key': secret.ZOMATO_API}
-    }).then(res=> {
-      self.setState({
-        data: res.data.restaurants
-      })
-    }).catch(err=> {
-      console.log(err)
-    })
+  loginCheck() {
+    if(localStorage.getItem('user')) {
+      this.setState({ isLogin: true })
+    } else {
+      this.setState({ isLogin: false })
+    }
+  }
+
+  handleUserData() {
+    this.setState({userData: localStorage.getItem('user')})
+  }
+
+  logout() {
+    localStorage.removeItem('user')
+    window.location.reload()
   }
 
   componentDidMount() {
-    this.getAPIData()
+    this.handleUserData()
+    this.loginCheck()
   }
 
   render() {
     return (
-      <div className="App">
-        <h1 className="title is-3 main-title">Zomatoed ! Restaurants in Jakarta</h1>
-        <div className="columns is-multiline main-app">
-          {this.state.data.map(each => {
-            return (
-              <div key={each.restaurant.id} className="column is-3">
-                <div className="card">
-                  <div className="card-image">
-                    <figure className="image is-2by1">
-                      <img src={each.restaurant.featured_image} alt="test" />
-                    </figure>
-                  </div>
-                  <div className="card-content">
-                    <div className="media">
-                      <div className="media-left">
-                        <figure className="image is-48x48">
-                          <img src={each.restaurant.thumb} alt="test" />
-                        </figure>
-                      </div>
-                      <div className="media-content">
-                        <p className="title is-4"><a href={each.restaurant.url} target="_blank">{each.restaurant.name}</a></p>
-                      </div>
-                    </div>
+      <Router>
+        <div className="App">
+          <nav className="nav zomatoed">
+            <div className="nav-left">
+              <h2 className="title is-4 nav-item">Zomatoed React</h2>
+            </div>
+            <div className="nav-right">
+              <p className="nav-item"><Link to="/">Home</Link></p>
+              { this.state.isLogin ?
+                <a className="nav-item" onClick={this.logout}>Logout</a>
+                :
+                <p className="nav-item"><Link to="/login">Login</Link></p>
+              }
+            </div>
+          </nav>
 
-                    <div className="content">
-                      <p>{each.restaurant.location.address}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+          <Route exact path="/" component={Main} />
+          <Route path="/login" component={Login} />
         </div>
-      </div>
+      </Router>
     );
   }
 }
