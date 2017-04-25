@@ -20,6 +20,7 @@ class Movie extends React.Component {
                   <p>Genre : { movie.Genre }</p>
                   <p>Awards : { movie.Awards }</p>
                   <p>Actors : { movie.Actors }</p>
+                  <p>Thank You</p>
                 </div>
               )
           })}
