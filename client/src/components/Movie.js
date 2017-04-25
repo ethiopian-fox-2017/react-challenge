@@ -7,11 +7,11 @@ class Movie extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="intro row">
         <div className="movie-wrap col-md-4">
           { this.props.dataMovie.map(movie => {
-            console.log(movie);
               return (
                 <div key={movie.imdbID}>
                   <h3>{ movie.Title }</h3>

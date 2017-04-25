@@ -34,6 +34,19 @@
     height: 30px;
 }
 
+.list-nav ul li {
+    list-style: none;
+    float: left;
+    padding: 10px;
+    margin: 3px;
+}
+
+.searchForm {
+    width: 10%;
+    padding: 17px;
+    float: left;
+    margin: 30px 10px;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
