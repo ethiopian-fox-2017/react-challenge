@@ -6,11 +6,14 @@ import Movie from './components/Movie'
 import SearchMovie from './components/SearchMovie'
 import LoginPage from './components/LoginPage'
 import About from './components/About'
+import NoMatch from './components/NoMatch'
 
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Switch,
+  Redirect
 } from 'react-router-dom'
 
 
@@ -18,9 +21,11 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      movies : []
+      movies : [],
+      isLogin : false
     }
     this.addMovie = this.addMovie.bind(this)
+    this.statusLogin = false
   }
 
   addMovie(newMovie) {
@@ -37,7 +42,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('Ini will mount 1');
+    this.cekLoginUser()
   }
 
   componentDidMount() {
@@ -53,6 +58,16 @@ class App extends React.Component {
       .catch(err => console.log(err))
       // console.log(this.state.movie);
   }
+
+  cekLoginUser() {
+    if (window.localStorage.getItem('username')) {
+      this.setState({isLogin : true})
+    } else {
+      this.setState({isLogin : false})
+    }
+  }
+
+
 
   render() {
     console.log('Render 2 kali', this.state.movies);
@@ -74,10 +89,12 @@ class App extends React.Component {
                   <li><Link to="/login">Login</Link></li>
                 </ul>
                 <hr/>
-
-                <Route exact path="/" render={() => <Movie dataMovie={ this.state.movies }/> }/>
-                <Route path="/about" component={About}/>
-                <Route path="/login" component={LoginPage}/>
+                <Switch>
+                  <Route exact path="/" render={() => <Movie dataMovie={ this.state.movies } statusLogin={ this.state.isLogin }/> }/>
+                  <Route path="/about" component={About}/>
+                  <Route path="/login" component={LoginPage}/>
+                  <Route component={NoMatch}/>
+                </Switch>
               </div>
             </Router>
           </div>

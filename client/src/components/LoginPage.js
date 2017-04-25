@@ -1,4 +1,11 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom'
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -38,6 +45,7 @@ class LoginPage extends React.Component {
     window.localStorage.setItem('username', this.state.username)
     console.log("ini cari localStorage", window.localStorage.getItem('username'));
     // alert("Welcome ", window.localStorage.getItem('username'))
+     window.location.href = 'http://localhost:3000/';
   }
 
 }
