@@ -5,7 +5,7 @@ const ContentApp = ({moviesLists, onSelectedMovie} ) => {
     <ul>
       {moviesLists.map((movies) => {
         return (
-          <li onClick={()=> onSelectedMovie(movies)} key={movies.imdbID}>{movies.Title}</li>
+          <li onClick={() => onSelectedMovie(movies)} key={movies.imdbID}>{movies.Title}</li>
         )
       })}
     </ul>

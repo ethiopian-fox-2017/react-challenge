@@ -1,8 +1,9 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 // import HeaderApp from './HeaderApp'
-import SingleContentApp from './SingleContentApp'
-import SearchApp from './SearchApp'
-import ContentApp from './ContentApp'
+import SingleContentApp from './SingleContentApp';
+import SearchApp from './SearchApp';
+import ContentApp from './ContentApp';
 
 class App extends Component {
   constructor(props){
@@ -32,9 +33,12 @@ class App extends Component {
 
 
   render(){
+
+    let searchTerm = _.debounce(term => {this.movieSearch(term)}, 300)
+    
     return (
       <div>
-        <SearchApp onSearchMovie={term => this.movieSearch(term)}/>
+        <SearchApp onSearchMovie={searchTerm}/>
         <SingleContentApp movie={this.state.selectedMovie}/>
         <ContentApp
           onSelectedMovie={selectedMovie => this.setState({selectedMovie})}
