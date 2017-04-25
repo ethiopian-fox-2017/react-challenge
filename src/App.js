@@ -1,71 +1,44 @@
 import React from 'react';
-import axios from 'axios'
-import './App.css';
-import JokeList from './components/JokeList'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import JokesPage from './components/JokesPage'
+import LoginPage from './components/LoginPage'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Paper from 'material-ui/Paper';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-const style = {
-  margin: 20,
-  paddingLeft: 30,
-  paddingRight: 30,
-  textAlign: 'center',
-  display: 'inline-block',
-};
+injectTapEventPlugin()
 
-class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      jokes: []
-    }
-    injectTapEventPlugin()
-  }
+const App = () => (
+  <MuiThemeProvider>
+    <Router>
+      <div>
 
-  componentDidMount() {
-    console.log('did mount');
-    let self = this
-    axios.get(`https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten`)
-      .then(res => {
-        console.log(res.data);
-        self.setState({ jokes: res.data })
-      })
-      .catch(err => console.log(err))
-  }
-
-  addJoke() {
-    let newJoke = {
-      id: 99,
-      setup: 'Who am I?',
-      punchline: 'I am I'
-    }
-    let newJokes = this.state.jokes.concat(newJoke)
-    this.setState({ jokes: newJokes })
-  }
-
-  removeJoke(removingIndex) {
-    let newJokes = this.state.jokes.filter((joke, index) => index !== removingIndex)
-    this.setState({ jokes: newJokes })
-  }
-
-  render() {
-    return (
-      <MuiThemeProvider>
-        <div className="App">
-          <Paper style={style} zDepth={2}>
-          <h1>What Jokes Today ??</h1>
-          <RaisedButton label="Add Joke" onClick={ () => this.addJoke() } />
-          </Paper>
-          <JokeList
-            jokes={ this.state.jokes }
-            removeJoke={ this.removeJoke.bind(this) }
-          />
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <ToolbarSeparator />
+            <Link to="/">
+              <RaisedButton
+                label="Jokes"
+                primary={true}
+              />
+            </Link>
+            <ToolbarSeparator />
+            <Link to="/login">
+              <RaisedButton
+                label="Login"
+                primary={true}
+              />
+            </Link>
+          </ToolbarGroup>
+        </Toolbar>
+        <div>
+          <Route exact path="/" component={JokesPage}/>
+          <Route path="/login" component={LoginPage}/>
         </div>
-      </MuiThemeProvider>
-    );
-  }
-}
+      </div>
+    </Router>
+  </MuiThemeProvider>
+)
 
-export default App;
+export default App

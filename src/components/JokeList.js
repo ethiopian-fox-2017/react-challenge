@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -7,7 +7,7 @@ class JokeList extends React.Component {
   render() {
     return (
       <div>
-        { this.props.jokes.length === 0 && (<CircularProgress />)}
+        { this.props.jokes.length === 0 && (<CircularProgress />) }
         { this.props.jokes.map((joke, index) => {
           return (
             <div key={ index }>
