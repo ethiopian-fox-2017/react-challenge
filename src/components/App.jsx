@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-// import HeaderApp from './HeaderApp'
+import HeaderApp from './HeaderApp'
 import SingleContentApp from './SingleContentApp';
 import SearchApp from './SearchApp';
 import ContentApp from './ContentApp';
@@ -35,9 +35,10 @@ class App extends Component {
   render(){
 
     let searchTerm = _.debounce(term => {this.movieSearch(term)}, 300)
-    
+
     return (
       <div>
+        <HeaderApp/>
         <SearchApp onSearchMovie={searchTerm}/>
         <SingleContentApp movie={this.state.selectedMovie}/>
         <ContentApp

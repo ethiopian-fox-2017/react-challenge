@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {
+  Link
+} from 'react-router-dom'
 
-class HeaderApp extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-    }
-  }
-  render() {
-    return (
-      <div>
-        <h1>OMDB Movies</h1>
-      </div>
-    );
-  }
+const HeaderApp = () => {
+  return (
+    <div>
+      <ul>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/login">Login</Link></li>
+      <li><Link to="/home">Home</Link></li>
+    </ul>
+    </div>
+  );
 }
 
 export default HeaderApp;
