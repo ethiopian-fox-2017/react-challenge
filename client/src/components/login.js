@@ -16,7 +16,6 @@ class Login extends Component {
   };
 
 submit(e){
-  console.log('masuk submit email');
   e.preventDefault()
   localStorage.setItem('email',this.state.email);
   this.setState({

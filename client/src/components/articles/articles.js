@@ -1,17 +1,31 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+
+import{fetchArticles} from '../../actions'
 
 class Articles extends Component {
+  constructor() {
+      super();
+      this.state = {
+          articles: [],
+          articleShow:'',
+      };
+   };
+
+   componentDidMount() {
+    this.props.fetchArticles();
+   }
     render() {
         return (
             <div >
-              {this.props.sendarticle.map((article,index)=>{
+              {this.props.articles.map((article,index)=>{
                 return(
                    <div className='card' key={index} style={{borderStyle:'solid',borderWidth: '5px',margin:'20px'}}>
                      <div className="card-image">
                       <figure className="image is-640x480">
                         <img
                           style={{width:'480px',height:'320px'}}
-                          src={article.urlToImage} alt='lala'/>
+                          src={article.picture_url} alt='lala'/>
                       </figure>
                     </div>
                        <div className='card-content'>
@@ -35,4 +49,10 @@ class Articles extends Component {
     }
 }
 
-export default Articles;
+const mapStateToProps = state =>({ articles: state.articles })
+
+const mapDispatchToProps = dispatch =>({
+  fetchArticles : () => dispatch(fetchArticles())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Articles);

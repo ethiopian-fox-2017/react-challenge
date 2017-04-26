@@ -17,7 +17,6 @@ class Header extends Component {
     });
     }
     componentDidMount(){
-      console.log('');
       if (localStorage.getItem('email')) {
         this.setState({
           isLogin:true
@@ -25,7 +24,6 @@ class Header extends Component {
       }
     }
     render() {
-      console.log(this.state.isLogin);
         return (
             <div>
 
@@ -36,6 +34,11 @@ class Header extends Component {
                     <Link to='/'>
                         <div className='button'>
                             home
+                        </div>
+                    </Link>
+                    <Link to='/user'>
+                        <div className='button'>
+                            user
                         </div>
                     </Link>
                     {this.state.isLogin ? (
